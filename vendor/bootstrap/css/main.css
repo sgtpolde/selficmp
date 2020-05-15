@@ -9,6 +9,7 @@
 * {
     box-sizing: border-box;
   }
+
   body {
     margin: 0;
     font-family: Arial;
@@ -27,10 +28,38 @@
     position: fixed;
     right: -77px;
     top: 270px;
-    transition: all 0.2s ease-in 0s;//this is the key attribute
+    transition: all 0.2s ease-in 0s; //this is the key attribute
     z-index: 9999;
     cursor: pointer;
     }
     .float-button:hover {
         right: -7px;//hide it by pushing it off the screen
+        }
+
+        .posts-wrapper {
+          width: 50%;
+          margin: 20px auto;
+          border: 1px solid #eee;
+        }
+        .post {
+          width: 90%;
+          margin: 20px auto;
+          padding: 10px 5px 0px 5px;
+          border: 1px solid green;
+        }
+        .post-info {
+          margin: 10px auto 0px;
+          padding: 5px;
+        }
+        .fa {
+          font-size: 1.2em;
+        }
+        .fa-thumbs-down, .fa-thumbs-o-down {
+          transform:rotateY(180deg);
+        }
+        .logged_in_user {
+          padding: 10px 30px 0px;
+        }
+        i {
+          color: blue;
         }

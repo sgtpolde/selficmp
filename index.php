@@ -20,10 +20,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="vendor/bootstrap/css/main.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <meta name="description" content="">
   <meta name="author" content="">
 
   <title>Selfi competition</title>
+
+  
   </head>
 
   <!-- Page Content -->
@@ -34,29 +37,95 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <h1 class="mt-5">Pozdravljen: <?php echo $_SESSION["username"]?></h1>
 
         <?php
-        $query = $link->query("SELECT * FROM images ORDER BY uploaded_on DESC");
+        $query = $link->query("SELECT * FROM images ORDER BY likes DESC");
+
+      //za like
+      $query3 = " SELECT images.id, images.file_name, COUNT(article_likes.id) as likes, GROUP_CONCAT(users.username separator '|') as liked FROM images  
+      LEFT JOIN article_likes  
+      ON article_likes.article = images.id  
+      LEFT JOIN users  
+      ON article_likes.user = users.id  
+      GROUP BY images.id  
+      ";  
+      $result = mysqli_query($link, $query3); 
+      if (!$result) {
+      printf("Error: %s\n", mysqli_error($link));
+      exit();
+      }
+
         ?>
 
-        <p class="lead">Complete with pre-defined file paths and responsive navigation!</p>
+        <p class="lead">Na tej strani so najboljši selfiji</p>
         <ul class="list-unstyled">
-          
+
+         
         <?php
- 
    
 if($query->num_rows > 0){
     while($row = $query->fetch_assoc()){
         $usrid = $row['user_id'];
+        $msg_id=$row['id']; //Message id
         $query2 = $link->query("SELECT username FROM users WHERE id = $usrid");
         $row2 = $query2->fetch_assoc();
         $usr = $row2['username'];
         $imageURL = 'uploads/'.$row["file_name"]; 
+        
+     
+      
 ?>
+
   <div class="border">
     <li class="user">
        <?php echo $usr ;?>
     </li>
     <li class="img">
     <img src="<?php echo $imageURL; ?>" alt="" />
+    </li>
+    <li class="user">
+    
+                <?php
+      $row3 = mysqli_fetch_array($result);
+       // echo $row3["id"];
+        echo '<a href="index.php?type=article&id='.$row3["id"].'">Like</a>';  
+        echo '<p>'.$row3["likes"].' People like this</p>';  
+      if(is_countable($row3["liked"]))  
+      {  
+           $liked = explode("|", $row3["liked"]);  
+           echo '<ul>';  
+           foreach($liked as $like)  
+           {  
+            
+                echo '<li>'.$like.'</li>';  
+           }  
+           echo '</ul>';  
+      }  
+ }  
+ if(isset($_GET["type"], $_GET["id"]))  
+ {  
+      $type = $_GET["type"];  
+      $id = (int)$_GET["id"];  
+      if($type == "article")  
+      {  
+           $query4 = "INSERT INTO article_likes (user, article) SELECT {$_SESSION['id']}, {$id} FROM images  
+           WHERE EXISTS(SELECT id FROM images WHERE id = {$id}) AND  NOT EXISTS(SELECT id FROM article_likes WHERE user = {$_SESSION['id']} AND article = {$id})  
+            LIMIT 1  
+           ";  
+           $tmp = $row3["likes"];
+           echo $tmp;
+           $query5 = "UPDATE images SET likes = $tmp WHERE id = {$id}";
+           mysqli_query($link, $query4); 
+           mysqli_query($link, $query5);
+
+           if (!$query4) {
+            printf("Error: %s\n", mysqli_error($link));
+            exit();
+            
+        }
+      
+      }  
+     
+          ?>
+           <!-- <meta http-equiv="refresh" content="0;url=index.php"> --> 
     </li>
     </div>
     <br>
@@ -68,6 +137,7 @@ if($query->num_rows > 0){
 
 
           <li>Bootstrap 4.3.1</li>
+          <?php echo $tmp ?>
           <li>jQuery 3.4.1</li>
         </ul>
       </div>
