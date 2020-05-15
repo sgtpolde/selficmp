@@ -42,7 +42,7 @@ if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])){
 }else{
     $statusMsg = 'Please select a file to upload.';
 }
-
+header("location:./index.php");
 // Display status message
 echo $statusMsg;
 ?>

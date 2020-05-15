@@ -35,6 +35,9 @@ if($query->num_rows > 0){
         <li class="img">
     <img src="<?php echo $imageURL; ?>" alt="" />
     </li>
+    <li>
+        <a href="delete.php" 
+    </li>
     </div>
     </ul>
     </div>

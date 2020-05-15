@@ -88,6 +88,10 @@ if($query->num_rows > 0){
        // echo $row3["id"];
         echo '<a href="index.php?type=article&id='.$row3["id"].'">Like</a>';  
         echo '<p>'.$row3["likes"].' People like this</p>';  
+        $id = $row3['id']; 
+        $tmp = $row3["likes"];
+        $query5 = "UPDATE images SET likes = $tmp WHERE id = {$id}";
+        mysqli_query($link, $query5);
       if(is_countable($row3["liked"]))  
       {  
            $liked = explode("|", $row3["liked"]);  
@@ -110,12 +114,8 @@ if($query->num_rows > 0){
            WHERE EXISTS(SELECT id FROM images WHERE id = {$id}) AND  NOT EXISTS(SELECT id FROM article_likes WHERE user = {$_SESSION['id']} AND article = {$id})  
             LIMIT 1  
            ";  
-           $tmp = $row3["likes"];
            echo $tmp;
-           $query5 = "UPDATE images SET likes = $tmp WHERE id = {$id}";
            mysqli_query($link, $query4); 
-           mysqli_query($link, $query5);
-
            if (!$query4) {
             printf("Error: %s\n", mysqli_error($link));
             exit();
@@ -125,7 +125,7 @@ if($query->num_rows > 0){
       }  
      
           ?>
-           <!-- <meta http-equiv="refresh" content="0;url=index.php"> --> 
+            <meta http-equiv="refresh" content="0;url=index.php"> 
     </li>
     </div>
     <br>
@@ -137,7 +137,6 @@ if($query->num_rows > 0){
 
 
           <li>Bootstrap 4.3.1</li>
-          <?php echo $tmp ?>
           <li>jQuery 3.4.1</li>
         </ul>
       </div>
@@ -147,7 +146,7 @@ if($query->num_rows > 0){
   <div class="container">
       <div class="fixed-action-btn">
         <a href="./upload2.php" class="btn-floating red" >
-          <i class="material-icons">settings</i>
+          <i class="material-icons">add</i>
       </a>
     </div>
           
