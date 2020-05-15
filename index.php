@@ -19,11 +19,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="vendor/bootstrap/css/main.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <meta name="description" content="">
   <meta name="author" content="">
 
   <title>Selfi competition</title>
   </head>
+
   <!-- Page Content -->
   <div class="container">
     <div class="row">
@@ -72,10 +74,24 @@ if($query->num_rows > 0){
     </div>
   </div>
 
+  <div class="container">
+      <div class="fixed-action-btn">
+        <a href="./upload2.php" class="btn-floating red" >
+          <i class="material-icons">settings</i>
+      </a>
+    </div>
+          
+  </div>
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.slim.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
 </body>
 
 </html>
