@@ -1,0 +1,25 @@
+.img{
+    display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  padding: 0 4px;
+  justify-content: center;
+}
+* {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: Arial;
+  }
+  .border{
+    border-style: solid;
+    border-image-width: auto;
+
+  }
+  .user{
+    text-align: left;
+    padding: 20px;
+
+  }
